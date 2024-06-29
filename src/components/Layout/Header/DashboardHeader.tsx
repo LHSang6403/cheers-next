@@ -11,6 +11,7 @@ import PrimaryLogo from "@components/PrimaryLogo";
 import { usePathname } from "next/navigation";
 import { RotateCcw } from "lucide-react";
 import useDatePicker from "@/zustand/useDatePicker";
+import { DateRangePicker } from "@/components/Picker/RangeDate/DateRangePicker";
 
 export default function DashboardHeader() {
   const pathname = usePathname();
@@ -78,6 +79,9 @@ export default function DashboardHeader() {
             </Button>
           </div>
         )}
+        <div className="lg:w-full">
+          <DateRangePicker showCompare={false} />
+        </div>
         <Dropdown />
       </div>
     </header>

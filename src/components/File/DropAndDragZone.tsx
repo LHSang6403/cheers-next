@@ -17,12 +17,13 @@ interface RejectedFile {
 const DropAndDragZone = ({
   className,
   maxFiles,
+  onFilesChange,
 }: {
   className: string;
   maxFiles?: number;
+  onFilesChange?: (values: FileWithPreview[]) => void;
 }) => {
   const { saveFiles } = useFiles();
-
   const maxFilesNumber = maxFiles ?? 10;
 
   const [files, setFiles] = useState<FileWithPreview[]>([]);
@@ -80,7 +81,13 @@ const DropAndDragZone = ({
   }, [files]);
 
   useEffect(() => {
-    saveFiles(files);
+    if (files && onFilesChange) {
+      onFilesChange(files);
+    }
+
+    if (!onFilesChange) {
+      saveFiles(files);
+    }
   }, [files, saveFiles]);
 
   const removeFile = (name: string) => {

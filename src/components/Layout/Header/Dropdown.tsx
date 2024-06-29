@@ -14,7 +14,7 @@ export default function Dropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="h-8 px-2" variant="outline">
+        <Button className="h-9 px-2" variant="outline">
           Menu
         </Button>
       </DropdownMenuTrigger>

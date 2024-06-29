@@ -101,7 +101,7 @@ export function DataTable<TData, TValue>({
                 .getColumn(searchAttribute)
                 ?.setFilterValue(event.target.value)
             }
-            className="max-w-52 border border-[#E5E7EB]"
+            className="w-full border border-[#E5E7EB]"
           />
         )}
 

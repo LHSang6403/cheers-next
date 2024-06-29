@@ -22,12 +22,14 @@ export default function NavBar() {
         {navUrls.map((navUrl, index: number) => (
           <NavigationMenuItem key={index}>
             <Link href={navUrl.url}>
-              <NavigationMenuLink className="hover:text-accent-foreground focus:text-accent-foreground relative h-10 w-fit text-nowrap rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent focus:bg-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50">
-                {navUrl.name}
+              <NavigationMenuLink className="relative h-10 w-fit text-nowrap rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent focus:bg-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-cprimary data-[state=open]:bg-accent/50">
+                <span className={path === navUrl.url ? "text-cprimary" : ""}>
+                  {navUrl.name}
+                </span>
                 {path === navUrl.url && (
                   <motion.span
                     layoutId="underline"
-                    className="absolute -bottom-1.5 left-0 block h-[4px] w-full bg-foreground"
+                    className="absolute -bottom-1.5 left-0 block h-[4px] w-full bg-cprimary"
                   />
                 )}
               </NavigationMenuLink>
@@ -49,7 +51,7 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "hover:text-accent-foreground focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent",
+            "focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent",
             className
           )}
           {...props}
