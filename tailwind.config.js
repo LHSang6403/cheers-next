@@ -37,6 +37,7 @@ module.exports = {
           "background-hover": "hsl(var(--btn-background-hover))",
         },
         white: "var(--novel-white)",
+        cprimary: "#227330",
         stone: {
           50: "var(--novel-stone-50)",
           100: "var(--novel-stone-100)",

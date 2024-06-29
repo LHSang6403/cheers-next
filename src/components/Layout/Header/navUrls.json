@@ -5,12 +5,7 @@
     "permission": ""
   },
   {
-    "name": "Write",
-    "url": "/write",
-    "permission": ""
-  },
-  {
-    "name": "File",
+    "name": "File Uploading",
     "url": "/file",
     "permission": ""
   },
