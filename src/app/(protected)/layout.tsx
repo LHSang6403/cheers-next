@@ -11,7 +11,7 @@ export default function MainLayout({
       <div className="w-full">
         <DashboardHeader />
       </div>
-      <div className="flex min-h-screen w-full flex-col gap-4 pt-16 sm:pt-0">
+      <div className="flex min-h-screen w-full flex-col gap-4 pt-12 sm:pt-0">
         {children}
       </div>
       <Footer />

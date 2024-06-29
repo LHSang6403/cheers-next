@@ -1,16 +1,17 @@
 "use server";
 
 import createSupabaseServerClient from "@/supabase/server";
+import { ImageType } from "@utils/types/index";
 
-export async function downloadFiles(bucket: string, files: string[]) {
+export async function getImageDetailById({ id }: { id: string }) {
   try {
     const supabase = await createSupabaseServerClient();
 
-    const result = await supabase.storage.from(bucket).download(files[0]);
+    const result = await supabase.from("image").select("*").eq("id", id);
 
     return {
-      status: 200,
-      statusText: "OK",
+      status: result.status,
+      statusText: result.statusText,
       data: result.data,
       error: result.error,
     };
