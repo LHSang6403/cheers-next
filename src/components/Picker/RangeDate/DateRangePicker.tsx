@@ -22,9 +22,8 @@ import {
   CheckIcon,
 } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
-import "moment/locale/vi";
-import formatVNDate from "@utils/functions/formatVNDate";
 import useDatePicker from "@/zustand/useDatePicker";
+import formatDate from "@utils/functions/formatDate";
 
 export interface DateRangePickerProps {
   /** Click handler for applying the updates from DateRangePicker. */
@@ -57,12 +56,12 @@ interface Preset {
 
 // Define presets
 const PRESETS: Preset[] = [
-  { name: "thisMonth", label: "Tháng này" },
-  { name: "lastMonth", label: "Tháng trước" },
-  { name: "6months", label: "6 tháng nay" },
-  { name: "thisYear", label: "Năm nay" },
-  { name: "lastYear", label: "Năm trước" },
-  { name: "lastTwoYears", label: "2 năm nay" },
+  { name: "thisMonth", label: "This Month" },
+  { name: "lastMonth", label: "Last Month" },
+  { name: "6months", label: "6 Months" },
+  { name: "thisYear", label: "This Year" },
+  { name: "lastYear", label: "Last Year" },
+  { name: "lastTwoYears", label: "Last 2 Years" },
 ];
 
 /** The DateRangePicker component allows a user to select a range of dates */
@@ -74,7 +73,6 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
   initialCompareFrom,
   initialCompareTo,
   onUpdate,
-  locale = "vi-VN",
   showCompare = true,
 }): JSX.Element => {
   const { from, to, setFrom, setTo } = useDatePicker();
@@ -128,7 +126,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
 
   const getPresetRange = (presetName: string): DateRange => {
     const preset = PRESETS.find(({ name }) => name === presetName);
-    if (!preset) throw new Error(`Lỗi khoảng thời gian: ${presetName}`);
+    if (!preset) throw new Error(`Error range time: ${presetName}`);
     const from = new Date();
     const to = new Date();
 
@@ -327,16 +325,16 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
         <Button size={"lg"} variant="outline" className="h-9 w-full border">
           <div className="-ml-5 text-left">
             <div>
-              <div>{`${formatVNDate(range.from)}${
-                range.to != null ? " - " + formatVNDate(range.to) : ""
+              <div>{`${formatDate(range.from)}${
+                range.to != null ? " - " + formatDate(range.to) : ""
               }`}</div>
             </div>
             {rangeCompare != null && (
               <div className="-mt-1 text-xs opacity-60">
                 <>
-                  vs. {formatVNDate(rangeCompare.from)}
+                  vs. {formatDate(rangeCompare.from)}
                   {rangeCompare.to != null
-                    ? ` - ${formatVNDate(rangeCompare.to)}`
+                    ? ` - ${formatDate(rangeCompare.to)}`
                     : ""}
                 </>
               </div>
@@ -396,7 +394,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
                       id="compare-mode"
                     />
                   )}
-                  <Label htmlFor="compare-mode">Chọn khoảng thời gian</Label>
+                  <Label htmlFor="compare-mode">Pick a date range</Label>
                 </div>
                 <div className="flex w-full flex-col gap-2">
                   <div className="flex flex-row justify-center gap-2">
@@ -532,7 +530,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
             }}
             variant="ghost"
           >
-            Hủy
+            Cancel
           </Button>
           <Button
             className="text-background"
@@ -548,7 +546,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
               }
             }}
           >
-            Chọn
+            Select
           </Button>
         </div>
       </PopoverContent>

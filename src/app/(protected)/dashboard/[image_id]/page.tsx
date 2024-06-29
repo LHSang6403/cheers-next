@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { array } from "zod";
 
 export default function page() {
   const product = [
@@ -90,79 +92,73 @@ export default function page() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="flex flex-row gap-4">
-        <div className="h-fit w-1/2 overflow-hidden rounded-lg shadow-sm">
+      <div className="flex flex-row gap-4 lg:flex-col">
+        <div className="h-fit w-1/2 overflow-hidden rounded-lg shadow-sm lg:mx-auto lg:w-fit">
           <Image
             alt="Product"
             src="/assets/heineken.jpeg"
-            width={800}
-            height={800}
+            width={1000}
+            height={1000}
           />
         </div>
-        <Card className="h-full w-1/2">
+        <Card className="h-full w-1/2 lg:w-full">
           <CardHeader>
             <CardTitle>Image name...</CardTitle>
             <CardDescription>Description of the image...</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex h-fit flex-col gap-4 !text-sm">
-              <div className="h-fit">
-                <h3 className="font-semibold">Brand</h3>
-                <div className="h-fit">
-                  <div className="flex flex-row justify-between">
-                    <span>Tiger</span>
-                    <span>0.6</span>
-                  </div>
-                  <div className="flex flex-row justify-between">
-                    <span>Tiger</span>
-                    <span>0.6</span>
-                  </div>
-                  <div className="flex flex-row justify-between">
-                    <span>Tiger</span>
-                    <span>0.6</span>
-                  </div>
-                </div>
-              </div>
-              <div className="h-fit">
-                <h3 className="font-semibold">Category</h3>
-                <div className="h-fit">
-                  <div className="flex flex-row justify-between">
-                    <span>Type</span>
-                    <span>value</span>
-                  </div>
-                </div>
-              </div>
-              <div className="h-fit">
-                <h3 className="font-semibold">Space</h3>
-                <div className="h-fit">
-                  <div className="flex flex-row justify-between">
-                    <span>Restaurant</span>
-                    <span>0.6</span>
-                  </div>
-                  <div className="flex flex-row justify-between">
-                    <span>Grocery</span>
-                    <span>0.6</span>
-                  </div>
-                </div>
-              </div>
-              <div className="h-fit">
-                <h3 className="font-semibold">Staff</h3>
-                <div className="h-fit">
-                  <div className="flex flex-row justify-between">
-                    <span>Value</span>
-                    <span>0.6</span>
-                  </div>
-                </div>
-              </div>
-              <div className="h-fit">
-                <h3 className="font-semibold">Drinker</h3>
-                <div className="h-fit">
-                  <div className="flex flex-row justify-between">
-                    <span>Value</span>
-                    <span>0.6</span>
-                  </div>
-                </div>
-              </div>
+              <EachCategory
+                title="Brand"
+                tags={[
+                  { label: "Value A", value: 0.6 },
+                  { label: "Value Aaaaa", value: 0.6 },
+                  { label: "Value Acc", value: 0.6 },
+                  { label: "Value Accccc", value: 0.6 },
+                ]}
+              />
+              <EachCategory
+                title="Category"
+                tags={[
+                  { label: "Value A", value: 0.6 },
+                  { label: "Value Aeeeeee", value: 0.6 },
+                  { label: "Value Awwww", value: 0.6 },
+                  { label: "Value A", value: 0.6 },
+                ]}
+              />
+              <EachCategory
+                title="Space"
+                tags={[
+                  { label: "Value AAAAA", value: 0.6 },
+                  { label: "Value Abbbb", value: 0.6 },
+                  { label: "Value Arrrr", value: 0.6 },
+                  { label: "Value A", value: 0.6 },
+                ]}
+              />
+              <EachCategory
+                title="Staff"
+                tags={[
+                  { label: "Value A", value: 0.6 },
+                  { label: "Value Adddddd", value: 0.6 },
+                  { label: "Val", value: 0.6 },
+                  { label: "Value Aeeeeee", value: 0.6 },
+                  { label: "Val", value: 0.6 },
+                  { label: "Value Aeeeeee", value: 0.6 },
+                  { label: "Value A", value: 0.6 },
+                  { label: "Value Aeeeeee", value: 0.6 },
+                  { label: "Value A", value: 0.6 },
+                  { label: "Value Aeeeeee", value: 0.6 },
+                ]}
+              />
+              <EachCategory
+                title="Drinker"
+                tags={[
+                  { label: "Value Aaaaaa", value: 0.6 },
+                  { label: "Value Awwww", value: 0.6 },
+                  { label: "Value A", value: 0.6 },
+                  { label: "Value A", value: 0.6 },
+                ]}
+              />
             </div>
           </CardContent>
           <CardFooter className="mt-auto flex justify-between gap-4">
@@ -179,3 +175,48 @@ export default function page() {
     </div>
   );
 }
+
+const EachCategory = ({
+  title,
+  tags,
+}: {
+  title: string;
+  tags: {
+    label: string;
+    value: number;
+  }[];
+}) => {
+  const colorArr = [
+    "bg-red-200",
+    "bg-yellow-200",
+    "bg-blue-200",
+    "bg-green-200",
+    "bg-purple-200",
+    "bg-pink-200",
+    "bg-indigo-200",
+    "bg-cyan-200",
+    "bg-teal-200",
+  ];
+
+  return (
+    <div className="h-fit">
+      <h3 className="mb-1 font-semibold">{title}</h3>
+      <div className="flex h-fit flex-row flex-wrap gap-1.5">
+        {tags.map((tag, index) => (
+          <Badge
+            key={index}
+            className={`${
+              colorArr[
+                Math.floor(
+                  (index + Math.random() * colorArr.length) % colorArr.length
+                )
+              ]
+            } shadow-sm hover:bg-foreground hover:text-background`}
+          >
+            {tag.label} {tag.value}
+          </Badge>
+        ))}
+      </div>
+    </div>
+  );
+};
