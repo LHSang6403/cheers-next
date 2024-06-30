@@ -5,17 +5,18 @@ import createSupabaseBrowserClient from "@/supabase/client";
 import DropAndDragZone from "@/components/File/DropAndDragZone";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import axios from "axios";
+// import {createImage}
 
-export default function File() {
+export default function page() {
   const supabase = createSupabaseBrowserClient();
 
   const [files, setFiles] = useState<File[]>([]);
 
-  const uploadImagesToSupabase = async (files: File[]) => {
+  const processImage = async (files: File[]) => {
     toast.promise(
       async () => {
         const imagesUploadResults: string[] = [];
-
         for (const file of files) {
           const uploadingFile = file as File;
           const result = await supabase.storage
@@ -29,11 +30,16 @@ export default function File() {
             throw new Error(`Error when uploading: ${uploadingFile.name}`);
           }
         }
-
         if (!imagesUploadResults.length)
           throw new Error("Error when uploading images.");
 
-        // call to backend to send link
+        const res = await axios.post(
+          "/api/upload",
+          { link: imagesUploadResults[0] },
+          {}
+        );
+
+        console.log("----", res);
 
         // response -> sav to DB
       },
@@ -56,7 +62,7 @@ export default function File() {
             <Button
               className="h-10 w-56 text-[#FFFFFF] xl:w-full"
               onClick={async () => {
-                await uploadImagesToSupabase(files as File[]);
+                await processImage(files as File[]);
               }}
             >
               Submit
@@ -66,7 +72,7 @@ export default function File() {
         <div className="h-fit w-[1000px] xl:w-full">
           <DropAndDragZone
             className="rounded-lg border border-foreground/10 p-16 hover:cursor-pointer"
-            maxFiles={40}
+            maxFiles={1}
             onFilesChange={(files) => setFiles(files)}
           />
         </div>
