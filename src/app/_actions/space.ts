@@ -1,13 +1,13 @@
 "use server";
 
 import createSupabaseServerClient from "@/supabase/server";
-import { ImageType } from "@utils/types/index";
+import { SpaceType } from "@utils/types/index";
 
-export async function createImage({ image }: { image: ImageType }) {
+export async function createProduct({ space }: { space: SpaceType }) {
   try {
     const supabase = await createSupabaseServerClient();
 
-    const result = await supabase.from("image").insert(image);
+    const result = await supabase.from("space").insert(space);
 
     return {
       status: result.status,
@@ -25,11 +25,12 @@ export async function createImage({ image }: { image: ImageType }) {
   }
 }
 
-export async function getImageDetailById({ id }: { id: string }) {
+
+export async function getSpaceById({ id }: { id: string }) {
   try {
     const supabase = await createSupabaseServerClient();
 
-    const result = await supabase.from("image").select("*").eq("id", id);
+    const result = await supabase.from("space").select("*").eq("id", id);
 
     return {
       status: result.status,

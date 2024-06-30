@@ -1,13 +1,13 @@
 "use server";
 
 import createSupabaseServerClient from "@/supabase/server";
-import { ImageType } from "@utils/types/index";
+import { StaffType } from "@utils/types/index";
 
-export async function createImage({ image }: { image: ImageType }) {
+export async function createStaff({ staff }: { staff: StaffType }) {
   try {
     const supabase = await createSupabaseServerClient();
 
-    const result = await supabase.from("image").insert(image);
+    const result = await supabase.from("staff").insert(staff);
 
     return {
       status: result.status,
@@ -25,11 +25,11 @@ export async function createImage({ image }: { image: ImageType }) {
   }
 }
 
-export async function getImageDetailById({ id }: { id: string }) {
+export async function getProductById({ id }: { id: string }) {
   try {
     const supabase = await createSupabaseServerClient();
 
-    const result = await supabase.from("image").select("*").eq("id", id);
+    const result = await supabase.from("staff").select("*").eq("id", id);
 
     return {
       status: result.status,

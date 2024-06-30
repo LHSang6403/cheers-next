@@ -12,24 +12,37 @@ export default function File() {
   const [files, setFiles] = useState<File[]>([]);
 
   const uploadImagesToSupabase = async (files: File[]) => {
-    const imagesUploadResults: string[] = [];
+    toast.promise(
+      async () => {
+        const imagesUploadResults: string[] = [];
 
-    for (const file of files) {
-      const uploadingFile = file as File;
-      const result = await supabase.storage
-        .from("images")
-        .upload(uploadingFile.name, uploadingFile, {
-          upsert: true,
-          duplex: "half",
-        });
-      if (!result.error) imagesUploadResults.push(result.data.path);
-      else {
-        throw new Error(`Error when uploading: ${uploadingFile.name}`);
+        for (const file of files) {
+          const uploadingFile = file as File;
+          const result = await supabase.storage
+            .from("images")
+            .upload(uploadingFile.name, uploadingFile, {
+              upsert: true,
+              duplex: "half",
+            });
+          if (!result.error) imagesUploadResults.push(result.data.path);
+          else {
+            throw new Error(`Error when uploading: ${uploadingFile.name}`);
+          }
+        }
+
+        if (!imagesUploadResults.length)
+          throw new Error("Error when uploading images.");
+
+        // call to backend to send link
+
+        // response -> sav to DB
+      },
+      {
+        loading: "Processing images...",
+        success: "Images uploaded successfully",
+        error: "Error when uploading images",
       }
-    }
-
-    if (!imagesUploadResults.length)
-      throw new Error("Error when uploading images.");
+    );
   };
 
   return (
@@ -43,11 +56,7 @@ export default function File() {
             <Button
               className="h-10 w-56 text-[#FFFFFF] xl:w-full"
               onClick={async () => {
-                toast.promise(uploadImagesToSupabase(files as File[]), {
-                  loading: "Uploading images...",
-                  success: "Images uploaded successfully",
-                  error: "Error when uploading images",
-                });
+                await uploadImagesToSupabase(files as File[]);
               }}
             >
               Submit
